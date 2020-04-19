@@ -4,19 +4,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import java.util.Set;
 
 @Entity
 public class Car {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   private long id;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "owner")
+  private Owner owner;
+  @ManyToMany(mappedBy = "cars")
+  private Set<Owner> owners;
+
   private String brand, model, color, registerNumber;
   private int year, price;
 
   public Car() {}
 
   public Car(String brand, String model, String color,
-    String registerNumber, int year, int price) {
+    String registerNumber, int year, int price, Owner owner) {
     super();
     this.brand = brand;
     this.model = model;
@@ -24,6 +35,7 @@ public class Car {
     this.registerNumber = registerNumber;
     this.year = year;
     this.price = price;
+    this.owner = owner;
   }
 
   public String getBrand() {
@@ -72,5 +84,21 @@ public class Car {
 
   public void setPrice(int price) {
     this.price = price;
+  }
+
+  public Owner getOwner() {
+    return owner;
+  }
+
+  public void setOwner(Owner owner) {
+    this.owner = owner;
+  }
+
+  public Set<Owner> getOwners() {
+    return owners;
+  }
+
+  public void setOwners(Set<Owner> owners) {
+    this.owners = owners;
   }
 }
