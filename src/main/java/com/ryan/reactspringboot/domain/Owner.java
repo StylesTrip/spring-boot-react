@@ -10,9 +10,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Owner {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,6 +23,7 @@ public class Owner {
   @ManyToMany(cascade = CascadeType.MERGE)
   @JoinTable(name = "car_owner", joinColumns = { @JoinColumn(name =
    "ownerid") }, inverseJoinColumns = { @JoinColumn(name = "id") })
+  @JsonIgnore
   private Set<Car> cars = new HashSet<Car>(0);
   private String firstName, lastName;
 
