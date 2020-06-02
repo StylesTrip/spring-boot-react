@@ -12,7 +12,6 @@ import com.ryan.reactspringboot.domain.Owner;
 import com.ryan.reactspringboot.domain.CarRepository;
 import com.ryan.reactspringboot.domain.OwnerRepository;
 
-// @SpringBootTest
 @DataJpaTest
 public class CarRepositoryTest {
   @Autowired
