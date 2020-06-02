@@ -101,4 +101,12 @@ public class Car {
   public void setOwners(Set<Owner> owners) {
     this.owners = owners;
   }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public long getId() {
+    return id;
+  }
 }

@@ -10,8 +10,10 @@ import org.springframework.boot.CommandLineRunner;
 
 import com.ryan.reactspringboot.domain.Car;
 import com.ryan.reactspringboot.domain.Owner;
+import com.ryan.reactspringboot.domain.User;
 import com.ryan.reactspringboot.domain.CarRepository;
 import com.ryan.reactspringboot.domain.OwnerRepository;
+import com.ryan.reactspringboot.domain.UserRepository;
 
 @SpringBootApplication
 public class ReactSpringBootApplication {
@@ -20,6 +22,9 @@ public class ReactSpringBootApplication {
   private CarRepository repository;
   @Autowired
   private OwnerRepository ownerRepository;
+  @Autowired
+  private UserRepository userRepository;
+
   private static final Logger logger = LoggerFactory.getLogger(ReactSpringBootApplication.class);
 
 	public static void main(String[] args) {
@@ -43,6 +48,14 @@ public class ReactSpringBootApplication {
         new Car("Nissan", "Leaf", "White", "SSJ-3002", 2014, 29000, owner2));
       repository.save(
         new Car("Toyota", "Prius", "Silver", "KKO-0212", 2018, 39000, owner2));
+
+      userRepository.save(new User("user",
+     "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi",
+      "USER"));
+
+      userRepository.save(new User("admin",
+      "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
+      "ADMIN"));
     };
   }
 
