@@ -1,43 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {SERVER_URL} from '../constants.js';
+import Table from "./Table";
 
-class Carlist extends Component {
+const Carlist = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = { cars: [] };
-  }
+  const [cars, setCars] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     fetch(SERVER_URL + 'api/cars')
       .then((response) => response.json())
       .then((responseData) => {
-        this.setState({
-          cars: responseData._embedded.cars,
-        });
+          setCars(responseData._embedded.cars);
+          console.log(responseData._embedded.cars[0].color)
       })
       .catch(err => console.error(err));
-  }
+  }, []);
 
-  render() {
-    const tableRows = this.state.cars.map((car, index) =>
-      <tr key={index}>
-        <td>{car.brand}</td>
-        <td>{car.model}</td>
-        <td>{car.color}</td>
-        <td>{car.year}</td>
-        <td>{car.price}</td>
-      </tr>
-      );
+  const columns = React.useMemo(
+      () => [
+      {
+        Header: 'Brand',
+        accessor: 'brand'
+      }, {
+        Header: 'Model',
+        accessor: 'model'
+      }, {
+        Header: 'Color',
+        accessor: 'color'
+      }, {
+        Header: 'Year',
+        accessor: 'year'
+      }, {
+        Header: 'Price',
+        accessor: 'price'
+      }
+      ],
+      []
+    );
 
     return (
       <div className="App">
-        <table>
-          <tbody>{tableRows}</tbody>
-        </table>
+        <Table columns={columns} data={cars} />
       </div>
     );
-  }
 }
 
 export default Carlist;
