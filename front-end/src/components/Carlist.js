@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {SERVER_URL} from '../constants.js';
-import Table from "./Table";
+import Table from './Table';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddCar from './AddCar';
 
 const Carlist = () => {
 
@@ -19,6 +20,18 @@ const Carlist = () => {
           setCars(responseData._embedded.cars);
           console.log(responseData._embedded.cars[0].color)
       })
+      .catch(err => console.error(err));
+  }
+
+  const addCar = (car) => {
+    fetch(SERVER_URL + 'api/cars',
+        { method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(car)
+        })
+      .then(res => fetchCars())
       .catch(err => console.error(err));
   }
 
@@ -71,6 +84,7 @@ const Carlist = () => {
 
     return (
       <div className="App">
+        <AddCar addCar={addCar} fetchCars={fetchCars} />
         <Table columns={columns} data={cars} />
         <ToastContainer autoClose={1500} />
       </div>
