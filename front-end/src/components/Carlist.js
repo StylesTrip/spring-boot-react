@@ -4,6 +4,7 @@ import Table from './Table';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCar from './AddCar';
+import EditCar from './EditCar';
 
 const Carlist = () => {
 
@@ -33,6 +34,27 @@ const Carlist = () => {
         })
       .then(res => fetchCars())
       .catch(err => console.error(err));
+  }
+
+  const updateCar = (car, link) => {
+    fetch(link,
+      { method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(car)
+      })
+      .then(res => {
+        toast.success("Changes saved", {
+          position: toast.POSITION.BOTTOM_LEFT
+        });
+        fetchCars();
+      })
+      .catch(err =>
+        toast.error("Error when saving", {
+          position: toast.POSITION.BOTTOM_LEFT
+        })
+      )
   }
 
   const onDelClick = (link) => {
@@ -70,6 +92,14 @@ const Carlist = () => {
       }, {
         Header: 'Price',
         accessor: 'price'
+      }, {
+        id: 'editbutton',
+        sortable: false,
+        filterable: false,
+        width: 100,
+        accessor: '_links.self.href',
+        Cell: ({value, row}) => (<EditCar car={row} link={value}
+          updateCar={updateCar} fetchCars={fetchCars} />),
       }, {
         id: 'delbutton',
         sortable: false,
