@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddCar from './AddCar';
 import EditCar from './EditCar';
 import {CSVLink} from 'react-csv';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 const Carlist = () => {
 
@@ -107,7 +109,7 @@ const Carlist = () => {
         filterable: false,
         width: 100,
         accessor: '_links.self.href',
-        Cell: ({value}) => (<button onClick={() => {onDelClick(value)}}>Delete</button>)
+        Cell: ({value}) => (<Button size="small" color="secondary" onClick={() => {onDelClick(value)}}>Delete</Button>)
       }
       ],
       []
@@ -115,10 +117,16 @@ const Carlist = () => {
 
     return (
       <div className="App">
-        <AddCar addCar={addCar} fetchCars={fetchCars} />
-        <CSVLink data={cars} separator=";">Export CSV</CSVLink>
-        <Table columns={columns} data={cars} />
-        <ToastContainer autoClose={1500} />
+        <Grid container>
+          <Grid item>
+            <AddCar addCar={addCar} fetchCars={fetchCars} />
+          </Grid>
+          <Grid item style={{padding: 15}}>
+            <CSVLink data={cars} separator=";">Export CSV</CSVLink>
+          </Grid>
+        </Grid>
+          <Table columns={columns} data={cars} />
+          <ToastContainer autoClose={1500} />
       </div>
     );
 }
