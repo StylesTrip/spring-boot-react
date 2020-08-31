@@ -11,7 +11,6 @@ const EditCar = (props) => {
   const [car, setCar] = useState({brand: '', model: '', year: '', color: '', price: ''});
 
   const handleClickOpen = () => {
-    console.log(props.car.values.brand);
     setCar({brand: props.car.values.brand, model: props.car.values.model, color: props.car.values.color,
       year: props.car.values.year, fuel: props.car.values.fuel, price: props.car.values.price })
     setOpen(true);
