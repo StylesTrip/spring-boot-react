@@ -18,20 +18,24 @@ const Carlist = () => {
   }, []);
 
   const fetchCars = () => {
-    fetch(SERVER_URL + 'api/cars')
+    const token = sessionStorage.getItem("jwt");
+    fetch(SERVER_URL + 'api/cars', {
+      headers: {'Authorization': token}
+    })
       .then((response) => response.json())
       .then((responseData) => {
           setCars(responseData._embedded.cars);
-          console.log(responseData._embedded.cars[0].color)
       })
       .catch(err => console.error(err));
   }
 
   const addCar = (car) => {
+    const token = sessionStorage.getItem("jwt");
     fetch(SERVER_URL + 'api/cars',
         { method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': token
           },
           body: JSON.stringify(car)
         })
@@ -40,10 +44,12 @@ const Carlist = () => {
   }
 
   const updateCar = (car, link) => {
+    const token = sessionStorage.getItem("jwt");
     fetch(link,
       { method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': token
         },
         body: JSON.stringify(car)
       })
@@ -62,7 +68,12 @@ const Carlist = () => {
 
   const onDelClick = (link) => {
     if (window.confirm('Are you sure you want to delete?')) {
-      fetch(link, {method: 'DELETE'})
+      const token = sessionStorage.getItem("jwt");
+      fetch(link,
+        {
+          method: 'DELETE',
+          headers: {'Authorization': token}
+        })
         .then(res => {
           toast.success("Car deleted", {
             position: toast.POSITION.BOTTOM_LEFT
