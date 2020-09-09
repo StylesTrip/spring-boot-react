@@ -1,4 +1,4 @@
-#Spring Boot with React
+# Spring Boot with React
 Purpose of this project was to get my feet wet with building a simple React app with a Spring Boot backend.
 Followed along with this book: https://learning.oreilly.com/library/view/hands-on-full-stack/9781838822361/
 
