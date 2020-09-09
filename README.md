@@ -6,6 +6,7 @@ To build carapp frontend:
 ```yarn start```
 
 To build carapp backend:
+```mvn clean install```
 
 ```docker build -t reactboot .```
 
